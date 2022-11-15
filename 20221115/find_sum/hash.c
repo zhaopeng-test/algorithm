@@ -52,46 +52,52 @@ void print_list(struct node *head)
 	
 	for(p = head->next; p != NULL; p = p->next){
 	
-		printf("data %d\n", p->data);
+		printf("value %d\n", p->key);
+		printf("index %d\n", p->data);
 	}
 
 }
 
 #define HASH_LEN 128
 
-struct *node hash_table_init()
+struct node *hash_table_init()
 {
-	struct *node hash_head = NULL;
+	struct node *phash_head = NULL;
 	int i = 0;
 
-	hash_head = malloc(siezof(struct node)*HASH_LEN);
-	if (NULL == hash_head)
+	phash_head = malloc(sizeof(struct node)*HASH_LEN);
+	if (NULL == phash_head)
 		return NULL;
 	
 	for (; i < HASH_LEN; i ++){
-		p[i]->next = NULL;
-		p[i]->data = 0;
-		p[i]->key = 0;
+		phash_head[i].next = NULL;
+		phash_head[i].data = 0;
+		phash_head[i].key = 0;
 	}
 
-	return hash_head;
+	return phash_head;
 
 }	
 
 int hash_insert(int key, int data, struct node *phash_head)
 {
-	id = key % HEAD_LEN;
+	int id = key % HASH_LEN;
 
-	list_insert(key, data, &phead_head[id]);
+	list_insert(key, data, &phash_head[id]);
 
 	return 0;
 }
 
 struct node *hash_find(int key, struct node *phash)
 {
-	id = key % HEAD_LEN;
-	while ()
+	int id;
+	id = key % HASH_LEN;
+	while (phash[id].next != NULL){
+		if (phash[id].key == key)
+			return &phash[id];
+	}
 
+	return NULL;
 }
 
 int hash_print(struct node *phead)
@@ -103,27 +109,25 @@ int hash_print(struct node *phead)
 
 }
 
-
-int main_ori()
-{
-	struct node *head;
-	head = list_init();
-	list_insert(10,  head);
-	list_insert(11,  head);
-	list_insert(12,  head);
-	list_insert(13,  head);
-	print_list(head);
-	list_del(12, head);
-	print_list(head);
-
-
-	return 0;
-}
+#define ARR_NUM(a) sizeof(a)/sizeof(a[0])
 
 int main()
 {
+	int a[] = {2, 7, 11, 15};
+	int target = 9;
+	int i = 0;
 
+	struct node * hash = hash_init();
+	if (hash == NULL)
+		return -1;
 
+	for (; i < ARR_NUM(a); i ++){
+		hash_insert(a[i], i, hash);
+	}
+
+	hash_print(hash);
+	
+	return 0;
 }
 
 
