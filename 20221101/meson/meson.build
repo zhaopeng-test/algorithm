@@ -1,0 +1,5 @@
+project('project03', 'c')
+#executable('demo', 'hello.c')
+#static_library('lib2', 'lib/tlib2.c')
+libs=meson.get_compiler('c').find_library('lib2', dirs : join_paths(meson.source_root(),'build4'))
+executable('project03', 'main.c', dependencies: libs,include_directories:'lib/')

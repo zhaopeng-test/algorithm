@@ -98,10 +98,31 @@ int binary_search(int *a, int len, int value)
 	return val_id;
 }
 
+void find_sum(int *a, int len, int sum)
+{
+	int i = 0;
+	int j = 0;
+
+
+	for (; i < len; i ++){
+		printf("i a[%d] %d\n", i, a[i]);
+		for (j = i + 1; j < len; j ++){
+		   printf("j a[%d] %d\n", j, a[j]);
+		   if (a[j] == sum - a[i]){
+			printf("i %d, j %d\n", i, j);
+			return ;
+		   }
+		}
+	}
+	
+}
+
+
+
 
 #define ARR_NUM(a) sizeof(a)/sizeof(a[0])
 
-int main()
+int main_ori()
 {
 	int i = 0;
 	//int a[ ] = {10,4,8,2,6,1,9,5,2,6,8,4,1};
@@ -130,4 +151,14 @@ int main()
 	printf("find %d \n", index);
 }
 
+int main()
+{
+
+	int a[ ] = {10,4,11,2, 5,1,6,7};
+	int target = 9;
+
+	find_sum(a, ARR_NUM(a), target);
+
+	return 0;
+}
 
