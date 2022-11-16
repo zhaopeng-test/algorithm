@@ -52,7 +52,7 @@ void print_list(struct node *head)
 	
 	for(p = head->next; p != NULL; p = p->next){
 	
-		printf("value %d\n", p->key);
+		printf("value %d ", p->key);
 		printf("index %d\n", p->data);
 	}
 
@@ -91,10 +91,16 @@ int hash_insert(int key, int data, struct node *phash_head)
 struct node *hash_find(int key, struct node *phash)
 {
 	int id;
+	struct node *p = NULL;
+
 	id = key % HASH_LEN;
-	while (phash[id].next != NULL){
-		if (phash[id].key == key)
-			return &phash[id];
+	p = &phash[id];
+
+	while (p->next != NULL){
+		p = p->next;
+		if (p->key == key)
+			return p;
+
 	}
 
 	return NULL;
@@ -113,11 +119,13 @@ int hash_print(struct node *phead)
 
 int main()
 {
-	int a[] = {2, 7, 11, 15};
+	int a[] = {2, 7, 11, 15, 1, 5, 8};
 	int target = 9;
 	int i = 0;
+	int j = 0;
+	struct node *p = NULL;
 
-	struct node * hash = hash_init();
+	struct node * hash = hash_table_init();
 	if (hash == NULL)
 		return -1;
 
@@ -126,6 +134,13 @@ int main()
 	}
 
 	hash_print(hash);
+
+	for (i = 0; i < ARR_NUM(a); i ++){
+		p = hash_find(target - a[i], hash);
+		if (p != NULL){
+			printf("%d %d\n", i, p->data);
+		}
+	}
 	
 	return 0;
 }
